@@ -10,7 +10,7 @@ import LoginScreen from './screens/LoginScreen';
 import { observer } from 'mobx-react';
 
 Sentry.init({
-    dsn: 'https://b09775658d1147bdac9f7eb190030070@o396764.ingest.sentry.io/5250612',
+    dsn: 'https://d9068b80b6364a2a90b50a14242a95c1@o396764.ingest.sentry.io/5251046',
     enableInExpoDevelopment: false,
     debug: true,
 });
