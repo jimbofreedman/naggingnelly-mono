@@ -74,6 +74,7 @@ THIRD_PARTY_APPS = [
     'oauth2_provider',
     'social_django',
     'rest_framework_social_oauth2',
+    'corsheaders',
 ]
 
 LOCAL_APPS = [
@@ -133,6 +134,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -346,6 +348,10 @@ REST_FRAMEWORK = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+JSON_API_FORMAT_FIELD_NAMES = 'camelize'
+JSON_API_FORMAT_TYPES = 'camelize'
+JSON_API_PLURALIZE_TYPES = True
+
 SOCIAL_AUTH_FACEBOOK_KEY = env("SOCIAL_AUTH_FACEBOOK_KEY")
 SOCIAL_AUTH_FACEBOOK_SECRET = env("SOCIAL_AUTH_FACEBOOK_SECRET")
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
@@ -354,3 +360,8 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 }
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env("SOCIAL_AUTH_GOOGLE_KEY")
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env("SOCIAL_AUTH_GOOGLE_SECRET")
+
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = None
+SESSION_COOKIE_SAMESITE = None

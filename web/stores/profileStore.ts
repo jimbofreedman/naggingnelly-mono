@@ -6,10 +6,7 @@ import { AxiosInstance } from 'axios';
 export default class ProfileStore {
     httpClient = null;
 
-    @observable loading = false;
-
     @observable data = null;
-    @observable error = null;
 
     constructor(httpClient: AxiosInstance) {
         this.httpClient = httpClient;

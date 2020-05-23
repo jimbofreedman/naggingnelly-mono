@@ -3,6 +3,7 @@ module.exports = ({ config }) => {
         ...config,
         extra: {
             apiUrl: process.env.API_HOST,
+            sentryDSN: process.env.SENTRY_DSN,
             facebook: {
                 appId: process.env.FACEBOOK_APP_ID,
                 clientId: process.env.FACEBOOK_CLIENT_ID,

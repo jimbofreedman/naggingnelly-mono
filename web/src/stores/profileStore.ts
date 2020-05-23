@@ -1,28 +1,34 @@
-import Constants from 'expo-constants';
-
 import { observable, action, toJS } from 'mobx';
 import { AxiosInstance } from 'axios';
 
+import config from '../config';
+
 export default class ProfileStore {
-    httpClient = null;
+    httpClient:AxiosInstance;
 
     @observable loading = false;
 
-    @observable data = null;
+    @observable data = {
+        id: null,
+        attributes: {
+            email: null,
+        }
+    };
     @observable error = null;
 
     constructor(httpClient: AxiosInstance) {
+        // @ts-ignore
         this.httpClient = httpClient;
     }
 
     get loaded(): boolean {
-        return !!this.data;
+        return !!this.data.id;
     }
 
-    @action.bound load(): null {
+    @action.bound load(): void {
         this.loading = true;
         this.httpClient
-            .get(`${Constants.manifest.extra.apiUrl}/api/users/me/`)
+            .get(`${config.apiUrl}/api/users/me/`)
             .then((response) => {
                 this.loading = false;
                 this.data = response.data.data;
@@ -34,10 +40,10 @@ export default class ProfileStore {
             });
     }
 
-    @action.bound save(): null {
+    @action.bound save(): void {
         this.loading = true;
         this.httpClient
-            .patch(`${Constants.manifest.extra.apiUrl}/api/users/${this.data.id}/`, {
+            .patch(`${config.apiUrl}/api/users/${this.data.id}/`, {
                 data: toJS(this.data),
             })
             .then((response) => {
