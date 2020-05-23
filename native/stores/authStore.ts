@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 import Constants from 'expo-constants';
-import * as Facebook from 'expo-facebook';
+// import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
 
 import { observable, action, computed } from 'mobx';
@@ -31,7 +31,7 @@ export default class AuthStore {
             this.apiToken = t;
             this.checkLoggedIn();
         });
-        Facebook.initializeAsync(Constants.manifest.extra.facebook.appId);
+        // Facebook.initializeAsync(Constants.manifest.extra.facebook.appId);
     }
 
     @action.bound async checkLoggedIn(): boolean {
@@ -76,40 +76,40 @@ export default class AuthStore {
             });
     }
 
-    @action.bound
-    async loginFacebook(): boolean {
-        try {
-            const {
-                type,
-                token,
-                /*        expires,
-                permissions,
-                declinedPermissions, */
-            } = await Facebook.logInWithReadPermissionsAsync({
-                permissions: ['public_profile', 'email'],
-            });
-            if (type === 'success') {
-                const params = {
-                    client_id: Constants.manifest.extra.facebook.clientId,
-                    client_secret: Constants.manifest.extra.facebook.clientSecret,
-                    grant_type: 'convert_token',
-                    backend: 'facebook',
-                    token,
-                };
-
-                const response = await this.httpClient.post(
-                    `${Constants.manifest.extra.apiUrl}/auth/convert-token`,
-                    params,
-                );
-                this.apiToken = response.data.data.access_token;
-                SecureStore.setItemAsync('apiToken', this.apiToken);
-            } else {
-                // type === 'cancel'
-            }
-        } catch (error) {
-            console.log(`Facebook Login Error: ${error}`);
-        }
-    }
+    // @action.bound
+    // async loginFacebook(): boolean {
+    //     try {
+    //         const {
+    //             type,
+    //             token,
+    //             /*        expires,
+    //             permissions,
+    //             declinedPermissions, */
+    //         } = await Facebook.logInWithReadPermissionsAsync({
+    //             permissions: ['public_profile', 'email'],
+    //         });
+    //         if (type === 'success') {
+    //             const params = {
+    //                 client_id: Constants.manifest.extra.facebook.clientId,
+    //                 client_secret: Constants.manifest.extra.facebook.clientSecret,
+    //                 grant_type: 'convert_token',
+    //                 backend: 'facebook',
+    //                 token,
+    //             };
+    //
+    //             const response = await this.httpClient.post(
+    //                 `${Constants.manifest.extra.apiUrl}/auth/convert-token`,
+    //                 params,
+    //             );
+    //             this.apiToken = response.data.data.access_token;
+    //             SecureStore.setItemAsync('apiToken', this.apiToken);
+    //         } else {
+    //             // type === 'cancel'
+    //         }
+    //     } catch (error) {
+    //         console.log(`Facebook Login Error: ${error}`);
+    //     }
+    // }
 
     @action.bound
     async loginGoogle(): boolean {

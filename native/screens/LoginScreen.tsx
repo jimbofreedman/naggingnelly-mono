@@ -39,9 +39,6 @@ export default function LoginScreen(): React.ReactNode {
                 <Button primary onPress={submit}>
                     <Text>Login</Text>
                 </Button>
-                <Button onPress={authStore.loginFacebook}>
-                    <Text>Login with Facebook</Text>
-                </Button>
                 <Button onPress={authStore.loginGoogle}>
                     <Text>Login with Google</Text>
                 </Button>
