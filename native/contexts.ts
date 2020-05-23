@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Constants from 'expo-constants';
+import { ResourceStore } from '@reststate/mobx';
 
 import AuthStore from './stores/authStore';
 import ProfileStore from './stores/profileStore';
@@ -52,4 +53,5 @@ httpClient.interceptors.request.use(
 export default React.createContext({
     authStore,
     profileStore: new ProfileStore(httpClient),
+    todoItemStore: new ResourceStore({ name: 'todo-items', httpClient }),
 });

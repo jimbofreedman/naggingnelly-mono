@@ -29,6 +29,7 @@ export default class AuthStore {
 
         SecureStore.getItemAsync('apiToken').then((t) => {
             this.apiToken = t;
+            this.checkLoggedIn();
         });
         Facebook.initializeAsync(Constants.manifest.extra.facebook.appId);
     }
@@ -46,6 +47,7 @@ export default class AuthStore {
             })
             .catch(() => {
                 console.log('Not logged in');
+                this.apiToken = null;
                 return false;
             });
     }
