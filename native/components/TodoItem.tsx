@@ -9,7 +9,7 @@ export default function TodoItem({ item }): React.ReactNode {
     }
 
     const due = item.attributes.due ? moment(item.attributes.due) : null;
-
+    const overdue = due && due < moment();
 
     return (
         <Card>
@@ -17,7 +17,7 @@ export default function TodoItem({ item }): React.ReactNode {
                 <Left>
                     <Body>
                         <Text>{item.attributes.title}</Text>
-                        {due ? <Badge><Text>Due in {due.fromNow()}</Text></Badge> : null}
+                        {due ? <Text note>Due {!overdue ? "in " : ""}{due.fromNow()}</Text> : null}
                     </Body>
                 </Left>
                 <Right style={{flexDirection: 'row-reverse'}}>

@@ -35,11 +35,11 @@
     ],
     "ios": {
       "bundleIdentifier": "io.freedman.naggingnelly.app",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.1"
     },
     "android": {
       "package": "io.freedman.naggingnelly.app",
-      "versionCode": 10000
+      "versionCode": 10001
     }
   }
 }

@@ -12,6 +12,7 @@ class ContextViewSet(viewsets.ModelViewSet):
         return Context.objects.all()
 
 class TodoItemViewSet(viewsets.ModelViewSet):
+    resource_name = 'todo-items'
     queryset = TodoItem.objects.all()
     serializer_class = TodoItemSerializer
     permission_classes = [permissions.IsAuthenticated]
