@@ -11,6 +11,8 @@ module.exports = ({ config }) => {
             'google-oauth2': {
                 clientId: process.env.GOOGLE_OAUTH2_CLIENT_ID,
                 clientSecret: process.env.GOOGLE_OAUTH2_CLIENT_SECRET,
+                androidClientId: process.env.GOOGLE_OAUTH2_ANDROID_CLIENT_ID,
+                iosClientId: process.env.GOOGLE_OAUTH2_IOS_CLIENT_ID,
             },
         },
     };

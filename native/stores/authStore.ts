@@ -113,8 +113,8 @@ export default class AuthStore {
     async loginGoogle(): boolean {
         try {
             const config = {
-                androidClientId: '837901818162-5566r7va6bpfkk0npfb8c5up1igau07d.apps.googleusercontent.com',
-                iosClientId: '837901818162-oqh6u87cg4kjbe8ut6og3asqjb9rupde.apps.googleusercontent.com',
+                androidClientId: Constants.manifest.extra['google-oauth2'].androidClientId,
+                iosClientId: Constants.manifest.extra['google-oauth2'].iosClientId,
                 scopes: ['profile', 'email'],
             };
             const { type, accessToken /*user*/ } = await Google.logInAsync(config);
