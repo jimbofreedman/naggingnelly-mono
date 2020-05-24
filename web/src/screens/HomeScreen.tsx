@@ -59,12 +59,13 @@ function HomeScreen() {
     console.log('profile', profileStore.data.id, profileStore.data.attributes.email);
     console.log('tis', todoItemStore.count);
 
-    const filter = (item: { attributes: { title: any; deleted: any; status: string; start: number; }; }) => {
+    const filter = (item: { attributes: { title: any; deleted: any; status: string; start: number; snoozeUntil: number }; }) => {
         console.log(item.attributes.title);
         return (
             !item.attributes.deleted &&
             item.attributes.status === 'open' &&
-            (!item.attributes.start || moment(item.attributes.start) < moment())
+            (!item.attributes.start || moment(item.attributes.start) < moment()) &&
+            (!item.attributes.snoozeUntil || moment(item.attributes.snoozeUntil) < moment())
         );
     };
 

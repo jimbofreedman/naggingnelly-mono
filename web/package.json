@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@date-io/moment": "^1.3.13",
     "@material-ui/core": "^4.10.0",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/pickers": "^3.2.10",
     "@reststate/mobx": "https://github.com/jimbofreedman/reststate-mobx.git",
     "@sentry/browser": "^5.15.5",
     "@testing-library/jest-dom": "^4.2.4",
