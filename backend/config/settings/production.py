@@ -211,3 +211,21 @@ sentry_sdk.init(
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+CORS_ORIGIN_WHITELIST = (
+    'naggingnelly.com',
+    'backend.naggingnelly.com',
+    'www.naggingnelly.com',
+    'localhost:5000',
+)
+
+CSRF_TRUSTED_ORIGINS = (
+    'naggingnelly.com',
+    'backend.naggingnelly.com',
+    'www.naggingnelly.com',
+    'localhost:5000',
+)
+
+CSRF_COOKIE_DOMAIN = '.naggingnelly.com'
+CSRF_COOKIE_HTTPONLY = False
+
+SESSION_COOKIE_DOMAIN = '.naggingnelly.com'
