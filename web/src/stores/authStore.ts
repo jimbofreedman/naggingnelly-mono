@@ -33,6 +33,7 @@ export default class AuthStore {
             })
             .catch(() => {
                 console.log('Not logged in');
+                this.logout();
                 return false;
             });
     }
@@ -40,7 +41,7 @@ export default class AuthStore {
     @action.bound
     async loginEmailPassword(email: string, password: string): Promise<boolean> {
         return this.httpClient
-            .post(`${config.apiUrl}/auth-token/`, { username: email, password: password })
+            .post(`${config.apiUrl}/auth/obtain-auth-token/`, { username: email, password: password })
             .then((response) => {
                 console.log('Login success');
                 this.apiToken = response.data.token;

@@ -35,6 +35,7 @@ export default class ProfileStore {
                 console.log('Loaded profile');
             })
             .catch((error) => {
+                console.log("pl error", error);
                 this.loading = false;
                 this.error = error;
             });

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {RouterStore} from "mobx-react-router";
+import { ResourceStore } from "@reststate/mobx";
 
 import AuthStore from './stores/authStore';
 import ProfileStore from './stores/profileStore';
@@ -53,4 +54,5 @@ export default React.createContext({
     routingStore,
     authStore,
     profileStore: new ProfileStore(httpClient),
+    todoItemStore: new ResourceStore({name: "todo-items", httpClient})
 });
