@@ -43,9 +43,11 @@ function HomeScreen(): React.ReactNode {
         );
     }
 
+    console.log('profile', profileStore.data.id, profileStore.data.attributes.email);
     console.log('tis', todoItemStore.count);
 
     const filter = (item) => {
+        console.log(item.attributes.title);
         return (
             !item.attributes.deleted &&
             item.attributes.status === 'open' &&

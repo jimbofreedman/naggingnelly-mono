@@ -120,7 +120,7 @@ export default class AuthStore {
     // }
 
     @action.bound
-    async loginGoogle(): boolean {
+    async loginGoogle(): Promise<boolean> {
         this.loading = true;
         try {
             const config = {
@@ -130,15 +130,17 @@ export default class AuthStore {
             };
             const { type, accessToken /*user*/ } = await Google.logInAsync(config);
             if (type === 'success') {
-                this.finishLoginOAuth('google-oauth2', accessToken);
+                return this.finishLoginOAuth('google-oauth2', accessToken);
             } else {
                 // type === 'cancel'
                 this.loading = false;
                 console.log('Google login cancelled');
+                return false;
             }
         } catch (error) {
             this.loading = false;
             console.log(`Google Login Error: ${error}`);
+            return false;
         }
     }
 
@@ -151,11 +153,20 @@ export default class AuthStore {
             token,
         };
 
-        const response = await this.httpClient.post(`${Constants.manifest.extra.apiUrl}/auth/convert-token`, params);
-        this.apiToken = response.data.access_token;
-        SecureStore.setItemAsync('apiToken', this.apiToken);
-        this.loading = true;
-        return true;
+        const response = this.httpClient
+            .post(`${Constants.manifest.extra.apiUrl}/auth/convert-token`, params)
+            .then((response) => {
+                this.apiToken = response.data.access_token;
+                SecureStore.setItemAsync('apiToken', this.apiToken);
+                this.loading = false;
+                return true;
+            })
+            .catch((error) => {
+                console.log(error);
+                this.loading = false;
+                throw error;
+            }
+        )
     }
 
     @action.bound async logout(): null {
