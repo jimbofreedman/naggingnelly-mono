@@ -1,0 +1,14 @@
+{
+    "production": {
+        "awscloudformation": {
+            "AuthRoleName": "naggingnelly-production-20200524072202-authRole",
+            "UnauthRoleArn": "arn:aws:iam::233747919055:role/naggingnelly-production-20200524072202-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::233747919055:role/naggingnelly-production-20200524072202-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "naggingnelly-production-20200524072202-deployment",
+            "UnauthRoleName": "naggingnelly-production-20200524072202-unauthRole",
+            "StackName": "naggingnelly-production-20200524072202",
+            "StackId": "arn:aws:cloudformation:eu-west-1:233747919055:stack/naggingnelly-production-20200524072202/8e6a46c0-9dc1-11ea-94d6-026ecba91d00"
+        }
+    }
+}
