@@ -9,6 +9,8 @@ import axios from 'axios';
 export default class AuthStore {
     httpClient = null;
 
+    @observable loading = true;
+
     @observable apiToken: string = null;
 
     @computed get isLoggedIn(): boolean {
@@ -35,6 +37,7 @@ export default class AuthStore {
     }
 
     @action.bound async checkLoggedIn(): boolean {
+        this.loading = true;
         return this.httpClient
             .get(`${Constants.manifest.extra.apiUrl}/api/users/me/`, {
                 headers: {
@@ -43,27 +46,32 @@ export default class AuthStore {
             })
             .then(() => {
                 console.log('Logged in');
+                this.loading = false;
                 return true;
             })
             .catch(() => {
                 console.log('Not logged in');
                 this.apiToken = null;
+                this.loading = false;
                 return false;
             });
     }
 
     @action.bound
     async loginEmailPassword(email: string, password: string): boolean {
+        this.loading = true;
         return this.httpClient
-            .post(`${Constants.manifest.extra.apiUrl}/auth-token/`, { username: email, password: password })
+            .post(`${Constants.manifest.extra.apiUrl}/auth/obtain-auth-token/`, { username: email, password: password })
             .then((response) => {
                 console.log('Login success');
                 this.apiToken = response.data.token;
                 SecureStore.setItemAsync('apiToken', this.apiToken);
+                this.loading = false;
                 return true;
             })
             .catch((error) => {
                 console.log('Login failure', error);
+                this.loading = false;
                 if (!error.response) {
                     throw new Error('Could not contact login server');
                 }
@@ -113,6 +121,7 @@ export default class AuthStore {
 
     @action.bound
     async loginGoogle(): boolean {
+        this.loading = true;
         try {
             const config = {
                 androidClientId: Constants.manifest.extra['google-oauth2'].androidClientId,
@@ -124,9 +133,11 @@ export default class AuthStore {
                 this.finishLoginOAuth('google-oauth2', accessToken);
             } else {
                 // type === 'cancel'
+                this.loading = false;
                 console.log('Google login cancelled');
             }
         } catch (error) {
+            this.loading = false;
             console.log(`Google Login Error: ${error}`);
         }
     }
@@ -143,6 +154,7 @@ export default class AuthStore {
         const response = await this.httpClient.post(`${Constants.manifest.extra.apiUrl}/auth/convert-token`, params);
         this.apiToken = response.data.access_token;
         SecureStore.setItemAsync('apiToken', this.apiToken);
+        this.loading = true;
         return true;
     }
 
