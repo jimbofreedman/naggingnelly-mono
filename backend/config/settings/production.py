@@ -215,7 +215,7 @@ CORS_ORIGIN_WHITELIST = (
     'https://naggingnelly.com',
     'https://backend.naggingnelly.com',
     'https://www.naggingnelly.com',
-    'https://localhost:5000',
+    'http://localhost:5000',
 )
 
 CSRF_TRUSTED_ORIGINS = (
