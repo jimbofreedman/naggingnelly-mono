@@ -7,7 +7,7 @@
     "ios": "dotenv -e .env expo start --ios",
     "web": "dotenv -e .env expo start --web",
     "build:publish": "dotenv -e .env.prod expo publish",
-    "build:android": "dotenv -e .env.prod expo build:android",
+    "build:android": "dotenv -e .env.prod expo build:android -t app-bundle",
     "build:ios": "dotenv -e .env.prod expo build:ios",
     "eject": "expo eject",
     "lint": "eslint '**/*.{js,ts,tsx}' --fix"

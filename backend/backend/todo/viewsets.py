@@ -1,5 +1,5 @@
 from rest_framework import viewsets, permissions
-
+from backend.users.authentication import TokenAuthentication
 from .serializers import ContextSerializer, TodoItemSerializer
 from .models import Context, TodoItem
 
@@ -15,6 +15,7 @@ class TodoItemViewSet(viewsets.ModelViewSet):
     resource_name = 'todo-items'
     queryset = TodoItem.objects.all()
     serializer_class = TodoItemSerializer
+    authentication_classes = [TokenAuthentication, ]
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
