@@ -25,6 +25,10 @@ export default class ProfileStore {
         return !!this.data.id;
     }
 
+    get hasData(): boolean {
+        return !!this.data.id;
+    }
+
     @action.bound load(): void {
         this.loading = true;
         this.httpClient

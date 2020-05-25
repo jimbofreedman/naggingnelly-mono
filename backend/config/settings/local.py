@@ -66,6 +66,10 @@ INSTALLED_APPS += ["django_extensions"]  # noqa F405
 CELERY_TASK_EAGER_PROPAGATES = True
 # Your stuff...
 # ------------------------------------------------------------------------------
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+)
+CORS_ORIGIN_ALLOW_ALL=True
 CSRF_TRUSTED_ORIGINS = (
     'http://localhost:3000',
 )

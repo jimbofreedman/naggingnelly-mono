@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axios, {AxiosInstance} from 'axios';
 import {RouterStore} from "mobx-react-router";
 import { ResourceStore } from "@reststate/mobx";
 
@@ -10,49 +10,56 @@ import config from './config'
 
 console.log('API:', config.apiUrl);
 
-const httpClient = axios.create({
-    baseURL: `${config.apiUrl}/api/`,
-    withCredentials: true,
-});
 
 const authStore = new AuthStore();
 
-httpClient.interceptors.request.use((config) => {
-    // @ts-ignore
-    const finalChar = config.url[config.url.length - 1];
+const createHttpClient = () => {
+    const httpClient = axios.create({
+        baseURL: `${config.apiUrl}/api/`,
+        withCredentials: true,
+    });
 
-    if (finalChar === '?') {
-        // eslint-disable-next-line no-param-reassign
+
+    httpClient.interceptors.request.use((config) => {
         // @ts-ignore
-        config.url = `${config.url.slice(0, -1)}/`;
-    } else if (finalChar !== '/') {
-        // eslint-disable-next-line no-param-reassign
-        config.url += '/';
-    }
-    return config;
-});
+        const finalChar = config.url[config.url.length - 1];
 
-httpClient.interceptors.request.use(
-    (config) => {
-        // eslint-disable-next-line no-param-reassign
-        if (authStore.apiToken) {
-            config.headers = {
-                ...config.headers,
-                'Content-Type': 'application/vnd.api+json',
-                Accept: 'application/vnd.api+json',
-                Authorization: `Token ${authStore.apiToken}`,
-            };
+        if (finalChar === '?') {
+            // eslint-disable-next-line no-param-reassign
+            // @ts-ignore
+            config.url = `${config.url.slice(0, -1)}/`;
+        } else if (finalChar !== '/') {
+            // eslint-disable-next-line no-param-reassign
+            config.url += '/';
         }
         return config;
-    },
-    (error) => Promise.reject(error),
-);
+    });
+
+    httpClient.interceptors.request.use(
+        (config) => {
+            // eslint-disable-next-line no-param-reassign
+            if (authStore.apiToken) {
+                config.headers = {
+                    ...config.headers,
+                    'Content-Type': 'application/vnd.api+json',
+                    Accept: 'application/vnd.api+json',
+                    Authorization: `Token ${authStore.apiToken}`,
+                };
+            }
+            return config;
+        },
+        (error) => Promise.reject(error),
+    );
+
+    return httpClient;
+}
 
 const routingStore = new RouterStore();
 
+// @ts-ignore
 export default React.createContext({
     routingStore,
     authStore,
-    profileStore: new ProfileStore(httpClient),
-    todoItemStore: new ResourceStore({name: "todo-items", httpClient})
+    profileStore: new ProfileStore(createHttpClient()),
+    todoItemStore: new ResourceStore({name: "todo-items", httpClient: createHttpClient()})
 });

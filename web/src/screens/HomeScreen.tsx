@@ -45,22 +45,12 @@ function HomeScreen() {
 
         });
 
-    React.useEffect(() => {
-        if (!profileStore.loaded) {
-            profileStore.load();
-        }
-        todoItemStore.loadIfNeeded();
-    });
-
-    if (!profileStore.loaded || !todoItemStore.loaded) {
-        return <Loading />;
+    const refresh = () => {
+        console.log("Refreshing")
+        todoItemStore.loadAll()
     }
 
-    console.log('profile', profileStore.data.id, profileStore.data.attributes.email);
-    console.log('tis', todoItemStore.count);
-
     const filter = (item: { attributes: { title: any; deleted: any; status: string; start: number; snoozeUntil: number }; }) => {
-        console.log(item.attributes.title);
         return (
             !item.attributes.deleted &&
             item.attributes.status === 'open' &&
@@ -72,6 +62,32 @@ function HomeScreen() {
     const sort = (a: { attributes: { order: number; }; }, b: { attributes: { order: number; }; }) => {
         return a.attributes.order - b.attributes.order;
     };
+
+    const processedItemList = todoItemStore.all().filter(filter).sort(sort);
+
+    console.log("Rendering HomeScreen");
+
+    React.useEffect(() => {
+        if (!profileStore.loaded) {
+            profileStore.load();
+        }
+
+        if (!todoItemStore.hasData && !todoItemStore.loading) {
+            refresh();
+        }
+
+        const todoItemRefresh = setInterval(() => {
+            refresh();
+        }, 5000);
+
+        return function cleanup() {
+            clearInterval(todoItemRefresh);
+        };
+    });
+
+    if (!profileStore.hasData || !todoItemStore.hasData) {
+        return <Loading />;
+    }
 
     return (
         <div>
@@ -90,11 +106,10 @@ function HomeScreen() {
                         </IconButton>
                 </Paper>
             </form>
-            {todoItemStore
-                .all()
-                .filter(filter)
-                .sort(sort)
-                .map((t:{id:number}) => <TodoItem key={t.id} item={t} />)}
+            {processedItemList
+                .map((item: { id: number; }) => (
+                    <TodoItem key={item.id} item={item} />
+                    ))}
             <Button variant="contained" onClick={authStore.logout}>Logout</Button>
         </div>
     );

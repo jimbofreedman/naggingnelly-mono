@@ -31,15 +31,16 @@ function HomeScreen(): React.ReactNode {
 
     console.log('Rendering HomeScreen');
 
-    const filter = (item) => {
+    const filter = (item: { attributes: { title: any; deleted: any; status: string; start: number; snoozeUntil: number }; }) => {
         return (
             !item.attributes.deleted &&
             item.attributes.status === 'open' &&
-            (!item.attributes.start || item.attributes.start < moment().format())
+            (!item.attributes.start || moment(item.attributes.start) < moment()) &&
+            (!item.attributes.snoozeUntil || moment(item.attributes.snoozeUntil) < moment())
         );
     };
 
-    const sort = (a, b) => {
+    const sort = (a: { attributes: { order: number; }; }, b: { attributes: { order: number; }; }) => {
         return a.attributes.order - b.attributes.order;
     };
 

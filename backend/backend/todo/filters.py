@@ -12,7 +12,7 @@ class ModifiedSinceFilterBackend(filters.BaseFilterBackend):
 
         str_modified_since = request.headers.get('If-Modified-Since')
         # This is a terrible datetime format, but it's the standard for If-Modified-Since
-        modified_since = datetime.strptime(str_modified_since[:-6], "%a %b %d %Y %H:%M:%S GMT%z")
+        modified_since =dateparse.parse_datetime(str_modified_since)
         if modified_since is None:
             raise ValidationError("Could not parse modified_since")
 

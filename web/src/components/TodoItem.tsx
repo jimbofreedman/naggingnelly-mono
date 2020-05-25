@@ -17,6 +17,7 @@ import {
     CardMedia, CardActions, MenuItem, Menu
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
+import {observer} from "mobx-react";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // @ts-ignore
-export default function TodoItem({ item }) {
+function TodoItem({ item }) {
     const classes = useStyles();
     const theme = useTheme();
     const [anchorEl, setAnchorEl] = React.useState<Element|null>(null);
@@ -78,6 +79,8 @@ export default function TodoItem({ item }) {
 
     const due = item.attributes.due ? moment(item.attributes.due) : null;
     const overdue = due && due < moment();
+
+    console.log('Rendering', item.attributes.title);
 
     return (
         <Card className={classes.root}>
@@ -136,3 +139,5 @@ export default function TodoItem({ item }) {
         </Card>
     );
 }
+
+export default observer(TodoItem);

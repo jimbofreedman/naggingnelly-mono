@@ -1160,7 +1160,7 @@
 
 "@reststate/mobx@https://github.com/jimbofreedman/reststate-mobx.git":
   version "0.0.7"
-  resolved "https://github.com/jimbofreedman/reststate-mobx.git#889ec9de2fa8a9f005258292f6a02d77e60a286d"
+  resolved "https://github.com/jimbofreedman/reststate-mobx.git#d8f481c944c37f5a4660536a18abb68a44f73240"
   dependencies:
     "@reststate/client" "^0.0.8"
 

@@ -28,8 +28,6 @@ const createHttpClient = () => {
     httpClient.interceptors.request.use((config) => {
         const finalChar = config.url[config.url.length - 1];
 
-        console.log(config.url, finalChar);
-
         if (finalChar === '?') {
             // eslint-disable-next-line no-param-reassign
             config.url = `${config.url.slice(0, -1)}/`;
@@ -37,7 +35,7 @@ const createHttpClient = () => {
             // eslint-disable-next-line no-param-reassign
             config.url += '/';
         }
-        console.log(config.url);
+
         return config;
     });
 
