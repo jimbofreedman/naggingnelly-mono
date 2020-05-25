@@ -8,6 +8,8 @@ import useStores from "./hooks/useStores";
 import LoginScreen from "./screens/LoginScreen";
 import {observer} from "mobx-react";
 import HomeScreen from "./screens/HomeScreen";
+import DashboardScreen from "./screens/DashboardScreen";
+import {Router, Route, Switch} from "react-router";
 
 function App() {
     const { routingStore, authStore } = useStores();
@@ -19,7 +21,16 @@ function App() {
     }
 
     return (
-        <HomeScreen />
+        <Router history={history}>
+            <Switch>
+                <Route path="/dashboard">
+                    <DashboardScreen />
+                </Route>
+                <Route path="/">
+                    <HomeScreen />
+                </Route>
+            </Switch>
+        </Router>
     );
 }
 
