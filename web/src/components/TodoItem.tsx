@@ -74,7 +74,7 @@ function TodoItem({ item }) {
         update({
             due: date
         });
-        setSnoozePickerOpen(false)
+        setDuePickerOpen(false)
     };
 
     const due = item.attributes.due ? moment(item.attributes.due) : null;
