@@ -1153,17 +1153,16 @@
     hoist-non-react-statics "^3.3.2"
     react-native-safe-area-view "^0.14.9"
 
-"@reststate/client@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@reststate/client/-/client-0.0.3.tgz#5def64ce5edd40769303617cea8c464e8303a3b7"
-  integrity sha512-GcWv+aCRUBrdOOu9wRrpTpkmGOlly3Le5z39omAi34aW+H+VDlJ6Q3ilqQKt55DvI1RsQNY3PIIUMMs9Uvmhbw==
+"@reststate/client@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@reststate/client/-/client-0.0.8.tgz#e5b0c2786adb4cda425d28cd4b6a1421d8b8270e"
+  integrity sha512-j7qw2nNvWvGQTRRfhTvfvSAUOoDKoBJ2SNAXcFw1XWk9bogFXXGg4NZzpgIqqqf9LBYrt74Rv8v5VfcrAiq/1g==
 
-"@reststate/mobx@^0.0.7":
+"@reststate/mobx@https://github.com/jimbofreedman/reststate-mobx.git":
   version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@reststate/mobx/-/mobx-0.0.7.tgz#b0fd49933f6245eb87c468cbc07735a753825d0b"
-  integrity sha512-TfKYKRvM7ga4sxH1iUsnP2Mb8D85sgNRZa2rm6X+86Cm6PLfW4dtkhbiT3NDZT1OSxc8I86z5TJ+hmWVxNAvkQ==
+  resolved "https://github.com/jimbofreedman/reststate-mobx.git#889ec9de2fa8a9f005258292f6a02d77e60a286d"
   dependencies:
-    "@reststate/client" "^0.0.3"
+    "@reststate/client" "^0.0.8"
 
 "@sentry/browser@^5.15.5":
   version "5.15.5"

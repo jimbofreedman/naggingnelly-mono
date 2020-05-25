@@ -8,9 +8,9 @@ import useStores from './hooks/useStores';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import { observer } from 'mobx-react';
-import Constants from "expo-constants";
-import Loading from "./components/Loading";
-import {Container, Text} from "native-base";
+import Constants from 'expo-constants';
+import Loading from './components/Loading';
+import { Container, Text } from 'native-base';
 
 Sentry.init({
     dsn: Constants.manifest.extra.sentryDSN,
@@ -21,11 +21,12 @@ Sentry.init({
 function App() {
     const { authStore } = useStores();
 
-    console.log("Rendering App");
-
     if (authStore.loading) {
-        console.log("moo");
-        return (<Container><Text>Dog</Text><Loading /></Container>);
+        return (
+            <Container>
+                <Loading />
+            </Container>
+        );
     }
 
     return authStore.isLoggedIn ? <HomeScreen /> : <LoginScreen />;

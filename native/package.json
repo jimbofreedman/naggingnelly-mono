@@ -13,7 +13,7 @@
     "lint": "eslint '**/*.{js,ts,tsx}' --fix"
   },
   "dependencies": {
-    "@reststate/mobx": "^0.0.7",
+    "@reststate/mobx": "https://github.com/jimbofreedman/reststate-mobx.git",
     "@sentry/react-native": "^1.3.9",
     "axios": "^0.19.2",
     "expo": "~37.0.3",

@@ -165,8 +165,7 @@ export default class AuthStore {
                 console.log(error);
                 this.loading = false;
                 throw error;
-            }
-        )
+            });
     }
 
     @action.bound async logout(): null {

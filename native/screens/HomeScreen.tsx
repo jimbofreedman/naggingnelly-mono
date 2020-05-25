@@ -15,21 +15,21 @@ import {
     Item,
     Label,
     Input,
-    Content
+    Content,
 } from 'native-base';
 import useStores from '../hooks/useStores';
 import Loading from '../components/Loading';
 import { observer } from 'mobx-react';
 import TodoItem from '../components/TodoItem';
 import moment from 'moment';
-import Constants from "expo-constants";
+import Constants from 'expo-constants';
 
 function HomeScreen(): React.ReactNode {
     const { authStore, profileStore, todoItemStore } = useStores();
     const [newTaskTitle, setNewTaskTitle] = React.useState(null);
     // const [processedItemList, setProcessedItemList] = React.useState([]);
 
-    console.log("Rendering HomeScreen");
+    console.log('Rendering HomeScreen');
 
     const filter = (item) => {
         return (
@@ -47,12 +47,12 @@ function HomeScreen(): React.ReactNode {
         todoItemStore
             .loadAll()
             .then((records) => {
-                console.log("Refresh todo-items success");
+                console.log('Refresh todo-items success');
 
-                    //.map((r) => r.d));
+                //.map((r) => r.d));
             })
-            .catch((error) => console.log("Refresh todo-items error"));
-    }
+            .catch((error) => console.log('Refresh todo-items error'));
+    };
 
     const processedItemList = todoItemStore.all().filter(filter).sort(sort);
 
@@ -83,30 +83,34 @@ function HomeScreen(): React.ReactNode {
         );
     }
 
-    const createTask = () => todoItemStore
-        .create({
-            attributes: {
-                title: newTaskTitle,
-                order: 0
-            }
-        })
-        .then(() => {
-            setNewTaskTitle(null);
-        });
+    const createTask = () =>
+        todoItemStore
+            .create({
+                attributes: {
+                    title: newTaskTitle,
+                    order: 0,
+                },
+            })
+            .then(() => {
+                setNewTaskTitle(null);
+            });
 
     return (
         <Container>
             <Content>
-                <Form style={{flexDirection:'row'}}>
-                    <Input placeholder='Add new task' value={newTaskTitle} onChangeText={(text) => setNewTaskTitle(text)} />
+                <Form style={{ flexDirection: 'row' }}>
+                    <Input
+                        placeholder="Add new task"
+                        value={newTaskTitle}
+                        onChangeText={(text) => setNewTaskTitle(text)}
+                    />
                     <Button success disabled={!newTaskTitle || !newTaskTitle.length} onPress={createTask}>
                         <Icon name="checkbox" />
                     </Button>
                 </Form>
-                {processedItemList
-                    .map((item) => (
-                        <TodoItem key={item.id} item={item} />
-                    ))}
+                {processedItemList.map((item) => (
+                    <TodoItem key={item.id} item={item} />
+                ))}
                 <Button onPress={authStore.logout} title="Logout">
                     <Text>Logout</Text>
                 </Button>

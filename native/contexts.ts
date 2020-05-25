@@ -25,6 +25,21 @@ const createHttpClient = () => {
     //         return request;
     //     });
     // }
+    httpClient.interceptors.request.use((config) => {
+        const finalChar = config.url[config.url.length - 1];
+
+        console.log(config.url, finalChar);
+
+        if (finalChar === '?') {
+            // eslint-disable-next-line no-param-reassign
+            config.url = `${config.url.slice(0, -1)}/`;
+        } else if (finalChar !== '/') {
+            // eslint-disable-next-line no-param-reassign
+            config.url += '/';
+        }
+        console.log(config.url);
+        return config;
+    });
 
     httpClient.interceptors.request.use(
         (config) => {
@@ -42,7 +57,7 @@ const createHttpClient = () => {
         (error) => Promise.reject(error),
     );
     return httpClient;
-}
+};
 
 export default React.createContext({
     authStore,

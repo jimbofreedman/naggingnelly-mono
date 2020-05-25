@@ -15,12 +15,10 @@ export default function LoginScreen(): React.ReactNode {
 
     const submit = () => {
         setShowSnackbar(false);
-        authStore
-            .loginEmailPassword(email, password)
-            .catch((error) => {
-                setShowSnackbar(true);
-                setSnackbarMessage(error.message);
-            });
+        authStore.loginEmailPassword(email, password).catch((error) => {
+            setShowSnackbar(true);
+            setSnackbarMessage(error.message);
+        });
     };
 
     return (
