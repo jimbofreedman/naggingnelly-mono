@@ -17,7 +17,6 @@ export default function LoginScreen(): React.ReactNode {
         setShowSnackbar(false);
         authStore
             .loginEmailPassword(email, password)
-            .then((response) => console.log('then', response))
             .catch((error) => {
                 setShowSnackbar(true);
                 setSnackbarMessage(error.message);

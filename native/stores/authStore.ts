@@ -22,12 +22,12 @@ export default class AuthStore {
             baseURL: `${Constants.manifest.extra.apiUrl}`,
         });
 
-        if (__DEV__) {
-            this.httpClient.interceptors.request.use((request) => {
-                console.log('AuthStore HTTP Request:', request);
-                return request;
-            });
-        }
+        // if (__DEV__) {
+        //     this.httpClient.interceptors.request.use((request) => {
+        //         console.log('AuthStore HTTP Request:', request);
+        //         return request;
+        //     });
+        // }
 
         SecureStore.getItemAsync('apiToken').then((t) => {
             this.apiToken = t;
@@ -139,7 +139,7 @@ export default class AuthStore {
             }
         } catch (error) {
             this.loading = false;
-            console.log(`Google Login Error: ${error}`);
+            console.log(`Google login Error: ${error}`);
             return false;
         }
     }

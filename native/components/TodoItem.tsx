@@ -2,14 +2,22 @@ import * as React from 'react';
 
 import {Badge, Body, Button, Card, CardItem, Icon, Left, Right, Text} from 'native-base';
 import moment from 'moment';
+import useStores from "../hooks/useStores";
+import {observer} from "mobx-react";
 
-export default function TodoItem({ item }): React.ReactNode {
+function TodoItem({ item }): React.ReactNode {
+    //const { todoItemStore } = useStores();
+
+    //const item = todoItemStore.byId({id: itemId});
+
     const update = (attrs:object) => {
         item.update({attributes: attrs});
     }
 
     const due = item.attributes.due ? moment(item.attributes.due) : null;
     const overdue = due && due < moment();
+
+    console.log("Rendering item", item.attributes.title);
 
     return (
         <Card>
@@ -33,3 +41,5 @@ export default function TodoItem({ item }): React.ReactNode {
         </Card>
     );
 }
+
+export default observer(TodoItem);

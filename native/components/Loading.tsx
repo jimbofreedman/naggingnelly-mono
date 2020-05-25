@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Spinner } from 'native-base';
+import {Spinner, StyleProvider, Text} from 'native-base';
 
 export default function Loading() {
     return <Spinner />;

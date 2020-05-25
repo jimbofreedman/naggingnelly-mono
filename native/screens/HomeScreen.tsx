@@ -27,27 +27,11 @@ import Constants from "expo-constants";
 function HomeScreen(): React.ReactNode {
     const { authStore, profileStore, todoItemStore } = useStores();
     const [newTaskTitle, setNewTaskTitle] = React.useState(null);
+    // const [processedItemList, setProcessedItemList] = React.useState([]);
 
-    React.useEffect(() => {
-        if (!profileStore.loaded) {
-            profileStore.load();
-        }
-        todoItemStore.loadIfNeeded();
-    });
-
-    if (!profileStore.loaded || !todoItemStore.loaded) {
-        return (
-            <Container>
-                <Loading />
-            </Container>
-        );
-    }
-
-    console.log('profile', profileStore.data.id, profileStore.data.attributes.email);
-    console.log('tis', todoItemStore.count);
+    console.log("Rendering HomeScreen");
 
     const filter = (item) => {
-        console.log(item.attributes.title);
         return (
             !item.attributes.deleted &&
             item.attributes.status === 'open' &&
@@ -58,6 +42,46 @@ function HomeScreen(): React.ReactNode {
     const sort = (a, b) => {
         return a.attributes.order - b.attributes.order;
     };
+
+    const refresh = () => {
+        todoItemStore
+            .loadAll()
+            .then((records) => {
+                console.log("Refresh todo-items success");
+
+                    //.map((r) => r.d));
+            })
+            .catch((error) => console.log("Refresh todo-items error"));
+    }
+
+    const processedItemList = todoItemStore.all().filter(filter).sort(sort);
+
+    React.useEffect(() => {
+        if (!profileStore.loaded) {
+            profileStore.load();
+        }
+
+        if (!todoItemStore.hasData && !todoItemStore.loading) {
+            refresh();
+        }
+
+        const todoItemRefresh = setInterval(() => {
+            refresh();
+        }, 10000);
+
+        return function cleanup() {
+            clearInterval(todoItemRefresh);
+        };
+    });
+
+    if (!profileStore.hasData || !todoItemStore.hasData) {
+        return (
+            <Container>
+                <Text>hi</Text>
+                <Loading />
+            </Container>
+        );
+    }
 
     const createTask = () => todoItemStore
         .create({
@@ -79,12 +103,9 @@ function HomeScreen(): React.ReactNode {
                         <Icon name="checkbox" />
                     </Button>
                 </Form>
-                {todoItemStore
-                    .all()
-                    .filter(filter)
-                    .sort(sort)
-                    .map((t) => (
-                        <TodoItem key={t.id} item={t} />
+                {processedItemList
+                    .map((item) => (
+                        <TodoItem key={item.id} item={item} />
                     ))}
                 <Button onPress={authStore.logout} title="Logout">
                     <Text>Logout</Text>
