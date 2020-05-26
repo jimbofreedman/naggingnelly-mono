@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 function HomeScreen() {
     const classes = useStyles();
     const { authStore, profileStore, todoItemStore } = useStores();
-    const { register, handleSubmit, watch, errors } = useForm();
+    const { register, handleSubmit, reset } = useForm();
     const onSubmit = (data: Record<string, any>):void => todoItemStore
         .create({
             attributes: {
@@ -42,7 +42,7 @@ function HomeScreen() {
             }
         })
         .then(() => {
-
+            reset();
         });
 
     const refresh = () => {
