@@ -224,9 +224,10 @@ CSRF_TRUSTED_ORIGINS = (
     'backend.naggingnelly.com',
     'www.naggingnelly.com',
     'localhost:5000',
+    'naggingnelly2.herokuapp.com',
 )
 
-CSRF_COOKIE_DOMAIN = '.naggingnelly.com'
+CSRF_COOKIE_DOMAIN = 'naggingnelly2.herokuapp.com'
 CSRF_COOKIE_HTTPONLY = False
 
-SESSION_COOKIE_DOMAIN = '.naggingnelly.com'
+SESSION_COOKIE_DOMAIN = 'naggingnelly2.herokuapp.com'
