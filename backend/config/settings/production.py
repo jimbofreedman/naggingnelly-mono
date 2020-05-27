@@ -217,6 +217,7 @@ CORS_ORIGIN_WHITELIST = (
     'https://www.naggingnelly.com',
     'http://localhost:5000',
     'http://localhost:3000',
+    'http://10.255.11.246:8089',  # for sitrep dashboard
 )
 
 CSRF_TRUSTED_ORIGINS = (
