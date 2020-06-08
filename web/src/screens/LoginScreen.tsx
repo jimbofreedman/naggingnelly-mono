@@ -4,6 +4,7 @@ import {OnSubmit, useForm} from 'react-hook-form';
 import config from '../config';
 import useStores from '../hooks/useStores';
 import {Button, FormControl, TextField, Typography} from "@material-ui/core";
+import GoogleLogin from "react-google-login";
 
 export default function LoginScreen() {
     const { authStore } = useStores();
@@ -38,7 +39,13 @@ export default function LoginScreen() {
                     />
                     <Button type="submit" color="primary" ref={register}>Login</Button>
                     {/*<Button type="button" onClick={authStore.loginFacebook}>Facebook</Button>*/}
-                    {/*<Button type="button" onClick={authStore.loginGoogle}>Login with Google</Button>*/}
+                    <GoogleLogin
+                        clientId={config.google.webClientId || ""}
+                        buttonText="Login"
+                        onSuccess={(response) => console.log(response)}
+                        onFailure={(response) => console.log(response)}
+                        cookiePolicy={'single_host_origin'}
+                    />
 
                     <Typography>API: {config.apiUrl}</Typography>
 

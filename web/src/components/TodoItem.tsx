@@ -128,6 +128,8 @@ function TodoItem({ item }) {
                 >
                     <MenuItem onClick={() => setSnoozePickerOpen(true)}>Snooze</MenuItem>
                     <MenuItem onClick={() => setDuePickerOpen(true)}>Set Due Date</MenuItem>
+                    <MenuItem onClick={() => update({status: 'cancelled'})}>Cancel</MenuItem>
+                    <MenuItem onClick={() => update({status: 'failed'})}>Fail</MenuItem>
                 </Menu>
                 <IconButton aria-controls="task-extras-menu" aria-haspopup="true" onClick={handleClick}>
                     <MenuIcon />
