@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from datetime import datetime
+from datetime import datetime, timedelta
 from time import time
 import calendar
 
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from model_utils.models import TimeStampedModel, StatusModel
+from model_utils.fields import StatusField
 from model_utils import Choices
 from recurrence.fields import RecurrenceField
 from django.utils import timezone
@@ -42,6 +44,8 @@ class TodoItem(TimeStampedModel, StatusModel):
 
     recurrence = RecurrenceField(blank=True, null=True)
     streak = models.PositiveSmallIntegerField(default=0)
+    status_history = ArrayField(StatusField(choices_name=STATUS), blank=True, null=True)
+    status_history_start = models.DateField(blank=True, null=True)
 
     contexts = models.ManyToManyField(Context, blank=True)
     project = models.ForeignKey('TodoItem', related_name='members',on_delete=models.PROTECT, blank=True, null=True)
@@ -79,7 +83,18 @@ class TodoItem(TimeStampedModel, StatusModel):
                     elif self.status == self.STATUS.failed:
                         self.streak = 0
 
+                    if self.status_history is None:
+                        self.status_history = [],
+                        self.status_history_start = self.due
+
+                    current_date = self.status_history_start + timedelta(days=len(self.status_history))
+                    while (current_date < self.due.date()):
+                        self.status_history.append(TodoItem.STATUS.open)
+                        current_date = current_date + timedelta(days=1)
+
+                    self.status_history.append(self.status)
                     self.status = self.STATUS.open
+
                 else:
                     self.completed = timezone.now()
             else:
