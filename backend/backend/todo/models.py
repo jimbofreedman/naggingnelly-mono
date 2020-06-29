@@ -65,13 +65,6 @@ class TodoItem(TimeStampedModel, StatusModel):
             if self.recurrence is not None and len(self.recurrence.rrules) > 0 and self.start:
                 self.recurrence.dtstart = timezone.make_aware(datetime.combine(self.due.date(), datetime.min.time()))
 
-                recurrence_log = TodoRecurrenceLog.objects.create(
-                    item=self,
-                    status=self.status,
-                    start=self.start,
-                    due=self.due
-                )
-                recurrence_log.save()
                 recur_date = self.recurrence.after(self.start, inc=False)
 
                 if recur_date is not None:
