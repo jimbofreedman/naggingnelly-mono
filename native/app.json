@@ -35,11 +35,12 @@
     ],
     "ios": {
       "bundleIdentifier": "io.freedman.naggingnelly.app",
-      "buildNumber": "1.0.4"
+      "buildNumber": "1.0.5",
+      "supportsTablet": true
     },
     "android": {
       "package": "io.freedman.naggingnelly.app",
-      "versionCode": 10004
+      "versionCode": 10005
     }
   }
 }
