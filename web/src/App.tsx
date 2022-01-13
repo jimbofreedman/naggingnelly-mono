@@ -16,7 +16,9 @@ function App() {
     const browserHistory = createBrowserHistory();
     const history = syncHistoryWithStore(browserHistory, routingStore);
 
-    if (!authStore.isLoggedIn) {
+    if (authStore.isLoggedIn === null) {
+        return <div>Loading</div>;
+    } else if (authStore.isLoggedIn === false) {
         return <LoginScreen />;
     }
 

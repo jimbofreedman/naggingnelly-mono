@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action } from 'mobx';
 import axios, {AxiosInstance} from 'axios';
 
 import config from '../config'
@@ -9,15 +9,17 @@ export default class AuthStore {
     });
 
     @observable apiToken: string = '';
+    @observable isLoggedIn: boolean | null = null;
 
-    @computed get isLoggedIn(): boolean {
-        return !!this.apiToken;
-    }
+    // @computed get isLoggedIn(): boolean {
+    //     return !!this.apiToken;
+    // }
 
     constructor() {
         this.apiToken = localStorage.getItem('apiToken') || '';
 
         // Facebook.initializeAsync(Constants.manifest.extra.facebook.appId);
+        this.checkLoggedIn();
     }
 
     @action.bound async checkLoggedIn(): Promise<boolean> {
@@ -29,6 +31,7 @@ export default class AuthStore {
             })
             .then(() => {
                 console.log('Logged in');
+                this.isLoggedIn = true;
                 return true;
             })
             .catch(() => {
@@ -45,6 +48,7 @@ export default class AuthStore {
             .then((response) => {
                 console.log('Login success');
                 this.apiToken = response.data.token;
+                this.isLoggedIn = true;
                 localStorage.setItem('apiToken', this.apiToken);
                 return true;
             })
@@ -135,5 +139,6 @@ export default class AuthStore {
     @action.bound logout(): void {
         localStorage.removeItem('apiToken');
         this.apiToken = '';
+        this.isLoggedIn = false;
     }
 }

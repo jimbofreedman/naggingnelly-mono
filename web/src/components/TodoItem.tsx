@@ -78,7 +78,21 @@ function TodoItem({ item }) {
     };
 
     const due = item.attributes.due ? moment(item.attributes.due) : null;
-    const overdue = due && due < moment();
+    const now = moment()
+    const overdue = due && due < now;
+
+    function getBackgroundColour() {
+        if (!due) {
+            return null;
+        } else if (overdue) {
+            return "error.main";
+        } else if (due < now.endOf("day")) {
+            return "info.main";
+        } else if (item.attributes.start && item.attributes.start > now) {
+            return "text.disabled";
+        }
+        return null;
+    }
 
     console.log('Rendering', item.attributes.title);
 
