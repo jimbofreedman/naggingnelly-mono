@@ -1,5 +1,5 @@
 import React from 'react';
-import axios, {AxiosInstance} from 'axios';
+import axios from 'axios';
 import {RouterStore} from "mobx-react-router";
 import { ResourceStore } from "@reststate/mobx";
 

@@ -6,8 +6,7 @@ import { observer } from 'mobx-react';
 import TodoItem from '../components/TodoItem';
 import moment from 'moment';
 import {useForm} from "react-hook-form";
-import {Button, Divider, FormControl, IconButton, InputBase, Paper, TextField, Typography} from "@material-ui/core";
-import config from "../config";
+import {Button, Divider, IconButton, InputBase, Paper} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({

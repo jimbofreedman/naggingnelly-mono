@@ -1,5 +1,5 @@
 import React from 'react';
-import {OnSubmit, useForm} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 
 import config from '../config';
 import useStores from '../hooks/useStores';
@@ -8,17 +8,17 @@ import GoogleLogin from "react-google-login";
 
 export default function LoginScreen() {
     const { authStore } = useStores();
-    const { register, handleSubmit, watch, errors } = useForm();
+    const { register, handleSubmit /*, watch, errors */ } = useForm();
     const onSubmit = (data: Record<string, any>):void => {
         console.log("Form data", data);
         //setShowSnackbar(false);
         authStore
             .loginEmailPassword(data.email, data.password)
             .then((response) => console.log('then', response))
-            .catch((error) => {
-                //setShowSnackbar(true);
-                //setSnackbarMessage(error.message);
-            });
+            // .catch((error) => {
+            //     //setShowSnackbar(true);
+            //     //setSnackbarMessage(error.message);
+            // });
     };
 
     return (

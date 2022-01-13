@@ -5,16 +5,14 @@ import {DatePicker, DateTimePicker} from "@material-ui/pickers";
 
 import moment, {Moment} from 'moment';
 import {
-    Button,
     Card,
     CardContent,
     Typography,
-    Badge,
-    CardHeader,
     IconButton,
     Avatar,
-    useTheme,
-    CardMedia, CardActions, MenuItem, Menu
+    CardActions,
+    MenuItem,
+    Menu
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {observer} from "mobx-react";
@@ -55,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 // @ts-ignore
 function TodoItem({ item }) {
     const classes = useStyles();
-    const theme = useTheme();
+    // const theme = useTheme();
     const [anchorEl, setAnchorEl] = React.useState<Element|null>(null);
     const [snoozePickerOpen, setSnoozePickerOpen] = React.useState(false);
     const [duePickerOpen, setDuePickerOpen] = React.useState(false);
