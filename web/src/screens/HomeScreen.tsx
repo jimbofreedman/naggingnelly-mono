@@ -46,7 +46,6 @@ function HomeScreen() {
         });
 
     const refresh = () => {
-        console.log("Refreshing")
         todoItemStore.loadAll()
     }
 
@@ -54,7 +53,7 @@ function HomeScreen() {
         return (
             !item.attributes.deleted &&
             item.attributes.status === 'open' &&
-            //(!item.attributes.start || moment(item.attributes.start) < moment()) &&
+            (!item.attributes.start || moment(item.attributes.start) < moment()) &&
             (!item.attributes.snoozeUntil || moment(item.attributes.snoozeUntil) < moment())
         );
     };
@@ -65,14 +64,14 @@ function HomeScreen() {
 
     const processedItemList = todoItemStore.all().filter(filter).sort(sort);
 
-    console.log("Rendering HomeScreen");
-
     React.useEffect(() => {
         if (!profileStore.loaded) {
+            console.log("Loading Profile...")
             profileStore.load();
         }
 
         if (!todoItemStore.loaded) {
+            console.log("Loading TodoItems...")
             todoItemStore.loadAll();
         }
 
@@ -85,8 +84,10 @@ function HomeScreen() {
         };
     });
 
+    console.log(todoItemStore.loading, todoItemStore.loaded, todoItemStore.hasData, todoItemStore.all());
+
     if (!todoItemStore.hasData && (!profileStore.loaded || !todoItemStore.loaded)) {
-        return <Loading />;
+        return <Loading/>;
     }
 
     return (
