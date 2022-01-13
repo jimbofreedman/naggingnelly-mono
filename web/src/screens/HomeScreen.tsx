@@ -54,7 +54,7 @@ function HomeScreen() {
         return (
             !item.attributes.deleted &&
             item.attributes.status === 'open' &&
-            (!item.attributes.start || moment(item.attributes.start) < moment()) &&
+            //(!item.attributes.start || moment(item.attributes.start) < moment()) &&
             (!item.attributes.snoozeUntil || moment(item.attributes.snoozeUntil) < moment())
         );
     };
@@ -78,14 +78,14 @@ function HomeScreen() {
 
         const todoItemRefresh = setInterval(() => {
             refresh();
-        }, 5000);
+        }, 30000);
 
         return function cleanup() {
             clearInterval(todoItemRefresh);
         };
     });
 
-    if (!profileStore.loaded || !todoItemStore.loaded) {
+    if (!todoItemStore.hasData && (!profileStore.loaded || !todoItemStore.loaded)) {
         return <Loading />;
     }
 

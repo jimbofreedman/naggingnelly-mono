@@ -41,6 +41,15 @@ const useStyles = makeStyles((theme) => ({
         height: 38,
         width: 38,
     },
+    dueToday: {
+        backgroundColor: theme.palette.info.light,
+    },
+    overdue: {
+        backgroundColor: theme.palette.error.light,
+    },
+    snoozed: {
+        backgroundColor: theme.palette.grey.A100,
+    }
 }));
 
 // @ts-ignore
@@ -77,27 +86,25 @@ function TodoItem({ item }) {
         setDuePickerOpen(false)
     };
 
+    const start = item.attributes.start ? moment(item.attributes.start) : null;
     const due = item.attributes.due ? moment(item.attributes.due) : null;
+    const snoozeUntil = item.attributes.due ? moment(item.attributes.due) : null;
     const now = moment()
     const overdue = due && due < now;
 
-    function getBackgroundColour() {
-        if (!due) {
-            return null;
-        } else if (overdue) {
-            return "error.main";
-        } else if (due < now.endOf("day")) {
-            return "info.main";
-        } else if (item.attributes.start && item.attributes.start > now) {
-            return "text.disabled";
+    function getBackgroundColor() {
+        if (overdue) {
+            return classes.overdue;
+        } else if (due && due < now.endOf("day")) {
+            return classes.dueToday;
+        } else if ((start && start > now) || (snoozeUntil && snoozeUntil > now)) {
+            return classes.snoozed;
         }
-        return null;
+        return undefined;
     }
 
-    console.log('Rendering', item.attributes.title);
-
     return (
-        <Card className={classes.root}>
+        <Card className={[classes.root, getBackgroundColor()].join(" ")}>
             <div className={classes.details}>
                 <CardContent className={classes.content}>
                     <Typography component="h6" variant="h6">

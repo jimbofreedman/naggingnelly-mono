@@ -95,12 +95,8 @@ function DashboardScreen() {
         };
     });
 
-    if (!profileStore.loaded || !todoItemStore.loaded) {
+    if (!todoItemStore.hasData && (!profileStore.loaded || !todoItemStore.loaded)) {
         return <Loading />;
-    }
-
-    if (!todoItemStore.hasData) {
-        return <div>Nothing here yet</div>
     }
 
     return (
