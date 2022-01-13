@@ -82,8 +82,8 @@ function DashboardScreen() {
             profileStore.load();
         }
 
-        if (!todoItemStore.hasData && !todoItemStore.loading) {
-            refresh();
+        if (!todoItemStore.loaded) {
+            todoItemStore.loadAll();
         }
 
         const todoItemRefresh = setInterval(() => {
@@ -95,8 +95,12 @@ function DashboardScreen() {
         };
     });
 
-    if (!profileStore.hasData || !todoItemStore.hasData) {
+    if (!profileStore.loaded || !todoItemStore.loaded) {
         return <Loading />;
+    }
+
+    if (!todoItemStore.hasData) {
+        return <div>Nothing here yet</div>
     }
 
     return (

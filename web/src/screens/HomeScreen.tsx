@@ -72,8 +72,8 @@ function HomeScreen() {
             profileStore.load();
         }
 
-        if (!todoItemStore.hasData && !todoItemStore.loading) {
-            refresh();
+        if (!todoItemStore.loaded) {
+            todoItemStore.loadAll();
         }
 
         const todoItemRefresh = setInterval(() => {
@@ -85,7 +85,7 @@ function HomeScreen() {
         };
     });
 
-    if (!profileStore.hasData || !todoItemStore.hasData) {
+    if (!profileStore.loaded || !todoItemStore.loaded) {
         return <Loading />;
     }
 
